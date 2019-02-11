@@ -20,9 +20,7 @@ import java.util.List;
 
 public abstract class BaseRecyclerViewModelAdapter<T extends BaseModel> extends BaseRecyclerViewAdapter<T, RecyclerView.ViewHolder> {
 
-    protected BaseRecyclerViewModelAdapter() {
-        super();
-    }
+
 
     protected BaseRecyclerViewModelAdapter(Context context) {
         super(context);

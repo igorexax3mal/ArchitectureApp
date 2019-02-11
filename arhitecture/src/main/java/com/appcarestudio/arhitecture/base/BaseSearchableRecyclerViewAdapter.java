@@ -26,9 +26,7 @@ public abstract class BaseSearchableRecyclerViewAdapter<T, H extends RecyclerVie
         super.setDataList(dataList);
         dataOriginal = new ArrayList<>(dataList);
     }
-    protected BaseSearchableRecyclerViewAdapter() {
-        super();
-    }
+
     protected BaseSearchableRecyclerViewAdapter(Context context) {
         super(context);
     }
