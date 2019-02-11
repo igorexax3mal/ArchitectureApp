@@ -1,7 +1,6 @@
 package com.appcarestudio.api;
 
 
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -18,14 +17,22 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by IGOR on 26.03.2018.
  */
 
-public class API {
+public abstract class API {
 
     public static final int TIMEOUT_IN_SEC = 15;
-    public static final String domenUrl = "https://looking.fashion/";
-    public static final String baseUrl = domenUrl + "udata/";
+
+    public abstract String getDomenUrl();
+
+    public abstract String getAdditionalPath();
+
+    public String getBaseUrl() {
+        return getDomenUrl() + getAdditionalPath();
+    }
 
 
-    public static Map<String, String> createDefaultParam() {
+
+
+    public  Map<String, String> createDefaultParam() {
         Map<String, String> stringMap = new HashMap<>();
        /* stringMap.put("lang", AppPrefs.getInstance().getLang());
         LatLng latLng = AppPrefs.getInstance().getLastKnownlocation();
@@ -39,12 +46,12 @@ public class API {
     }
 
 
-    private static OkHttpClient provideOkHttpClient(boolean isAuthorized) {
+    private  OkHttpClient provideOkHttpClient(boolean isAuthorized) {
         OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder();
         okHttpClient.connectTimeout(TIMEOUT_IN_SEC, TimeUnit.SECONDS);
         okHttpClient.readTimeout(TIMEOUT_IN_SEC, TimeUnit.SECONDS);
-      //  okHttpClient.addInterceptor(new RequestInterceptor(isAuthorized));
-      //  okHttpClient.addInterceptor(new ResponseInterceptor(isAuthorized));
+        okHttpClient.addInterceptor(new RequestInterceptor(isAuthorized));
+        okHttpClient.addInterceptor(new ResponseInterceptor(isAuthorized));
         HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
         logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         okHttpClient.addInterceptor(logInterceptor);
@@ -54,14 +61,14 @@ public class API {
     }
 
 
-    private static Gson provideGsonClient() {
+    private  Gson provideGsonClient() {
 /*        Gson gson = new GsonBuilder().setDateFormat(DateUtils.PATTERN_PARSEGSON):
                 registerTypeAdapter(City.class, new Stilist.CityStateDeserializer()).create();*/
         Gson gson = new GsonBuilder().create();
         return gson;
     }
 
-    private static Gson provideGoogleGsonClient() {
+    private  Gson provideGoogleGsonClient() {
         Gson gson =
                 new GsonBuilder()
                         .create();
@@ -89,10 +96,10 @@ public class API {
 */
 
 
-    private static Retrofit provideDefaultRetrofit(boolean isAuthorized) {
+    public  Retrofit provideDefaultRetrofit(boolean isAuthorized) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
-            //    .addConverterFactory(PrimitiveConverterFactory.create())
+                .baseUrl(getBaseUrl())
+                .addConverterFactory(PrimitiveConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(provideGsonClient()))
                 .client(provideOkHttpClient(isAuthorized))
                 .build();
