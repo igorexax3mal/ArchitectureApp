@@ -50,7 +50,7 @@ public class RequestInterceptor implements Interceptor {
             requestBuilder.addHeader("session_id", AppPrefs.getInstance().getAuthToken());
         }*/
 
-        HttpUrl.Builder urlBuilder = originalHttpUrl.newBuilder()
+       /* HttpUrl.Builder urlBuilder = originalHttpUrl.newBuilder()
                 .addQueryParameter("s", isAuthorized ? "0" : "1");
         HttpUrl url = urlBuilder.build();
 
@@ -58,8 +58,8 @@ public class RequestInterceptor implements Interceptor {
         Request.Builder requestBuilder = originalRequest.newBuilder().url(originalHttpUrl);
         requestBuilder.addHeader("User-Agent", "Looking" + " " + lookingVersion +" " +"(Android)");
 
-        requestBuilder.url(url);
-        Request request = requestBuilder.build();
-        return chain.proceed(request);
+        requestBuilder.url(url);*/
+       //Request request = requestBuilder.build();
+        return chain.proceed(originalRequest);
     }
 }

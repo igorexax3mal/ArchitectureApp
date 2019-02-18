@@ -61,20 +61,14 @@ public abstract class API {
     }
 
 
-    private  Gson provideGsonClient() {
+    public  Gson provideGsonClient() {
 /*        Gson gson = new GsonBuilder().setDateFormat(DateUtils.PATTERN_PARSEGSON):
                 registerTypeAdapter(City.class, new Stilist.CityStateDeserializer()).create();*/
         Gson gson = new GsonBuilder().create();
         return gson;
     }
 
-    private  Gson provideGoogleGsonClient() {
-        Gson gson =
-                new GsonBuilder()
-                        .create();
-        return gson;
-    }
-
+    
 
 /*
     public static ApiUsers getApiUsers(boolean isAuthorized) {
